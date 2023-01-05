@@ -9,9 +9,9 @@ app.use(bodyParser.urlencoded({ extended: false }))
 
 app.use(bodyParser.json())
 
-// const path = require('path');
-// app.use(express.static(path.join(__dirname, '../build')));
-// app.use('/static', express.static(path.join(__dirname, 'build//static')));
+const path = require('path');
+app.use(express.static(path.join(__dirname, '../build')));
+app.use('/static', express.static(path.join(__dirname, 'build//static')));
 
 const cors = require('cors');
 app.use(cors());
@@ -78,14 +78,6 @@ app.delete('/api/pokemon/:id', (req, res) => {
     })
 })
 
-// app.get('*', (req, res) => {
-//     res.sendFile(path.join(__dirname + '/../build/index.html'));
-// });
-
-app.listen(port, () => {
-    console.log(`Example app listening on port ${port}`)
-})
-
 //Search Function
 app.get('/api/pokemon/types/:type', (req, res) => {
     console.log(req.params.type);
@@ -93,3 +85,11 @@ app.get('/api/pokemon/types/:type', (req, res) => {
         res.json(data);
     })
 })
+
+app.listen(port, () => {
+    console.log(`Example app listening on port ${port}`)
+})
+
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname + '/../build/index.html'));
+});

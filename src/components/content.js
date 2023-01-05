@@ -2,12 +2,22 @@ import React from "react";
 import { Pokemon } from "./pokemon";
 import axios from "axios";
 
-// export class Content extends React.Component {
+
 export function Content() {
 
-    const [pType, setpType] = React.useState('');
+    const [pType, setpType] = React.useState('Normal');
     const [pokemon, setPokemon] = React.useState([]);
 
+    React.useEffect(() => {
+        axios.get('http://localhost:4000/api/pokemon/types/' + pType)
+            .then((response) => {
+                console.log(response.data);
+                setPokemon(response.data)
+            })
+            .catch((error) => {
+                console.log(error);
+            })
+    }, [])
 
     const search = (e) => {
         e.preventDefault();
@@ -29,7 +39,6 @@ export function Content() {
             <form onSubmit={(e) => search(e)}>
                 <br>
                 </br>
-                {/* <input type="text" className="form-control" value={pType} onChange={(e) => { setpType(e.target.value) }} ></input> */}
                 <select value={pType} onChange={(e) => { setpType(e.target.value) }}>
                     <option value="Normal">Normal</option>
                     <option value="Fire">Fire</option>
